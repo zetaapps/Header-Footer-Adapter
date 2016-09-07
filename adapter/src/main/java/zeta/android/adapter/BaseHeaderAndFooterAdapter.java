@@ -10,7 +10,10 @@ import android.view.ViewGroup;
  * <br>
  * <br>
  * {@// TODO: 9/7/16 Figure out how subclasses should define their custom ViewHolder implementation. }
+ * {@// TODO: 9/7/16 Are the header and footer view holders supposed to be different than a regular view holder? }
  * {@// TODO: 9/7/16 Make sure this works with DiffUtil, and that subclasses won't have difficulty animating }
+ * {@// TODO: 9/7/16 Check the sticky header implementation for some ideas about how to do this with an }
+ * {@// TODO:        item decoration.  The lib (https://github.com/timehop/sticky-headers-recyclerview). }
  */
 public abstract class BaseHeaderAndFooterAdapter extends RecyclerView.Adapter<BaseHeaderAndFooterAdapter.ViewHolder> {
 
@@ -65,7 +68,7 @@ public abstract class BaseHeaderAndFooterAdapter extends RecyclerView.Adapter<Ba
      * @param viewHolder : recycler view holder
      * @param position   : position of the item in the recycler view
      */
-    protected abstract void onHeaderViewHolder(final RecyclerView.ViewHolder viewHolder, final int position);
+    protected abstract void onBindHeaderViewHolder(final RecyclerView.ViewHolder viewHolder, final int position);
 
     /**
      * Base class contact to bind the footer view
@@ -127,7 +130,7 @@ public abstract class BaseHeaderAndFooterAdapter extends RecyclerView.Adapter<Ba
         int itemType = getItemViewType(position);
         switch (itemType) {
             case HEADER:
-                onHeaderViewHolder(holder, position);
+                onBindHeaderViewHolder(holder, position);
                 break;
             case FOOTER:
                 onBindFooterViewHolder(holder, position);

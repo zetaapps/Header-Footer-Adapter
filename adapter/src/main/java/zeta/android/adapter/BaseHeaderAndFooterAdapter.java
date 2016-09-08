@@ -56,26 +56,21 @@ public abstract class BaseHeaderAndFooterAdapter extends RecyclerView.Adapter<Ba
     protected abstract View onCreateRegularView(final ViewGroup parent, final int viewType);
 
     /**
-     * Base class contract to bind the header view
-     *
-     * @param viewHolder : recycler view holder
-     * @param position   : position of the item in the recycler view
+     * Exactly the same as {@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)},
+     * but called specifically to bind your header view data.
      */
-    protected abstract void onBindHeaderViewHolder(final RecyclerView.ViewHolder viewHolder, final int position);
+    protected abstract void onBindHeaderViewHolder(final RecyclerView.ViewHolder viewHolder);
 
     /**
-     * Base class contact to bind the footer view
-     *
-     * @param viewHolder : recycler view holder
-     * @param position   : position of the item in the recycler view
+     * Exactly the same as {@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)},
+     * but called specifically to bind your footer view data.
      */
-    protected abstract void onBindFooterViewHolder(final RecyclerView.ViewHolder viewHolder, final int position);
+    protected abstract void onBindFooterViewHolder(final RecyclerView.ViewHolder viewHolder);
 
     /**
-     * Base class contact to bind the regular item view
-     *
-     * @param viewHolder : recycler view holder
-     * @param position   : position of the item in the recycler view
+     * Exactly the same as {@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)},
+     * but never called for your header or footer views.  This corresponds to all the regular views that
+     * are not the header or footer.
      */
     protected abstract void onBindRegularViewHolder(final RecyclerView.ViewHolder viewHolder, final int position);
 
@@ -123,10 +118,10 @@ public abstract class BaseHeaderAndFooterAdapter extends RecyclerView.Adapter<Ba
         int itemType = getItemViewType(position);
         switch (itemType) {
             case HEADER:
-                onBindHeaderViewHolder(holder, position);
+                onBindHeaderViewHolder(holder);
                 break;
             case FOOTER:
-                onBindFooterViewHolder(holder, position);
+                onBindFooterViewHolder(holder);
                 break;
             default:
                 onBindRegularViewHolder(holder, getRegularItemPosition(position));

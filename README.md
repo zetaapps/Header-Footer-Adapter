@@ -26,3 +26,24 @@ protected abstract void onBindHeaderViewHolder(final RecyclerView.ViewHolder vie
 protected abstract void onBindFooterViewHolder(final RecyclerView.ViewHolder viewHolder);
 protected abstract void onBindRegularViewHolder(final RecyclerView.ViewHolder viewHolder, final int position);
 ```
+
+### Install
+
+Add jitpack to your root `build.gradle`.
+
+```
+allprojects {
+		repositories {
+			...
+			maven { url "https://jitpack.io" }
+		}
+	}
+```
+
+Then add the dependency.
+
+```
+dependencies {
+	        compile 'com.github.zetaapps:Header-Footer-Adapter:0.1'
+	}
+```

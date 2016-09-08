@@ -7,13 +7,6 @@ import android.view.ViewGroup;
 /**
  * A {@link android.support.v7.widget.RecyclerView.Adapter} that handles the optional addition
  * of a header and footer.  The header will be shown as the first item, and the footer as the last.
- * <br>
- * <br>
- * {@// TODO: 9/7/16 Figure out how subclasses should define their custom ViewHolder implementation. }
- * {@// TODO: 9/7/16 Are the header and footer view holders supposed to be different than a regular view holder? }
- * {@// TODO: 9/7/16 Make sure this works with DiffUtil, and that subclasses won't have difficulty animating }
- * {@// TODO: 9/7/16 Check the sticky header implementation for some ideas about how to do this with an }
- * {@// TODO:        item decoration.  The lib (https://github.com/timehop/sticky-headers-recyclerview). }
  */
 public abstract class BaseHeaderAndFooterAdapter extends RecyclerView.Adapter<BaseHeaderAndFooterAdapter.ViewHolder> {
 

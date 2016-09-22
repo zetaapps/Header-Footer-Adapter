@@ -8,7 +8,7 @@ import android.view.ViewGroup;
  * A {@link android.support.v7.widget.RecyclerView.Adapter} that handles the optional addition
  * of a header and footer.  The header will be shown as the first item, and the footer as the last.
  */
-public abstract class BaseHeaderAndFooterAdapter extends RecyclerView.Adapter<BaseHeaderAndFooterAdapter.ViewHolder> {
+public abstract class BaseHeaderAndFooterAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
     public static final int HEADER = 1000000000;
     public static final int FOOTER = 1000000001;
@@ -40,12 +40,12 @@ public abstract class BaseHeaderAndFooterAdapter extends RecyclerView.Adapter<Ba
     /**
      * Create a new {@link View} that will be the header.
      */
-    protected abstract View onCreateHeaderView(final ViewGroup parent);
+    protected abstract VH onCreateHeaderViewHolder(final ViewGroup parent);
 
     /**
      * Create a new {@link View} that will be the footer.
      */
-    protected abstract View onCreateFooterView(final ViewGroup parent);
+    protected abstract VH onCreateFooterViewHolder(final ViewGroup parent);
 
     /**
      * Create a new regular item view, just as you would for {@link RecyclerView.Adapter#onCreateViewHolder(ViewGroup, int)}
@@ -53,26 +53,26 @@ public abstract class BaseHeaderAndFooterAdapter extends RecyclerView.Adapter<Ba
      * @param parent   : parent view
      * @param viewType : type of view within regular items
      */
-    protected abstract View onCreateRegularView(final ViewGroup parent, final int viewType);
+    protected abstract VH onCreateRegularViewHolder(final ViewGroup parent, final int viewType);
 
     /**
      * Exactly the same as {@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)},
      * but called specifically to bind your header view data.
      */
-    protected abstract void onBindHeaderViewHolder(final RecyclerView.ViewHolder viewHolder);
+    protected abstract void onBindHeaderViewHolder(final VH viewHolder);
 
     /**
      * Exactly the same as {@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)},
      * but called specifically to bind your footer view data.
      */
-    protected abstract void onBindFooterViewHolder(final RecyclerView.ViewHolder viewHolder);
+    protected abstract void onBindFooterViewHolder(final VH viewHolder);
 
     /**
      * Exactly the same as {@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)},
      * but never called for your header or footer views.  This corresponds to all the regular views that
      * are not the header or footer.
      */
-    protected abstract void onBindRegularViewHolder(final RecyclerView.ViewHolder viewHolder, final int position);
+    protected abstract void onBindRegularViewHolder(final VH viewHolder, final int position);
 
     @Override
     public final int getItemCount() {
@@ -97,24 +97,19 @@ public abstract class BaseHeaderAndFooterAdapter extends RecyclerView.Adapter<Ba
     }
 
     @Override
-    public final ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
-        View view;
+    public final VH onCreateViewHolder(final ViewGroup parent, final int viewType) {
         switch (viewType) {
             case HEADER:
-                view = onCreateHeaderView(parent);
-                break;
+                return onCreateHeaderViewHolder(parent);
             case FOOTER:
-                view = onCreateFooterView(parent);
-                break;
+                return onCreateFooterViewHolder(parent);
             default:
-                view = onCreateRegularView(parent, viewType);
-                break;
+                return onCreateRegularViewHolder(parent, viewType);
         }
-        return new ViewHolder(view);
     }
 
     @Override
-    public final void onBindViewHolder(final ViewHolder holder, final int position) {
+    public final void onBindViewHolder(final VH holder, final int position) {
         int itemType = getItemViewType(position);
         switch (itemType) {
             case HEADER:
@@ -183,18 +178,6 @@ public abstract class BaseHeaderAndFooterAdapter extends RecyclerView.Adapter<Ba
     private int getRegularItemPositionOffset() {
         return shouldShowHeader() ? HEADER_COUNT : NO_ITEM_COUNT;
     }
-
-    /**
-     * Recycler View holder class
-     */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public ViewHolder(View v) {
-            // All views that would normally be contained in this class can be found in the custom
-            // view class used instead.
-            super(v);
-        }
-    }
-
 }
 
 
